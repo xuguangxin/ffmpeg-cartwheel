@@ -265,7 +265,7 @@ void ff_hevc_bump_frame(HEVCContext *s)
             if ((frame->flags) &&
                 frame->sequence == s->seq_output &&
                 frame->poc != s->poc) {
-                if (frame->flags == HEVC_FRAME_FLAG_OUTPUT && frame->poc < min_poc) {
+                if ((frame->flags & HEVC_FRAME_FLAG_OUTPUT) && frame->poc < min_poc) {
                     min_poc = frame->poc;
                 }
             }
