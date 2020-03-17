@@ -1,0 +1,26 @@
+From 3a8a2f41480c9ad06bcc4241c469e8b3d38fc253 Mon Sep 17 00:00:00 2001
+From: Xu Guangxin <guangxin.xu@intel.com>
+Date: Sat, 14 Mar 2020 06:49:30 -0400
+Subject: [PATCH 32/36] lavc: ff_hevc_bump_frame, fix min poc selection logical
+
+a bumpable frame can be used as refrence, so we need use & to test the flag not ==
+---
+ libavcodec/hevc_refs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libavcodec/hevc_refs.c b/libavcodec/hevc_refs.c
+index ef1e1cf10b..77e610956e 100644
+--- a/libavcodec/hevc_refs.c
++++ b/libavcodec/hevc_refs.c
+@@ -254,7 +254,7 @@ void ff_hevc_bump_frame(HEVCContext *s)
+             if ((frame->flags) &&
+                 frame->sequence == s->seq_output &&
+                 frame->poc != s->poc) {
+-                if (frame->flags == HEVC_FRAME_FLAG_OUTPUT && frame->poc < min_poc) {
++                if ((frame->flags & HEVC_FRAME_FLAG_OUTPUT) && frame->poc < min_poc) {
+                     min_poc = frame->poc;
+                 }
+             }
+-- 
+2.20.1
+
