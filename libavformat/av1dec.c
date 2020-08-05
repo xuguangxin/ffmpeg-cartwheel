@@ -67,7 +67,7 @@ static int read_obu(const uint8_t *buf, int size, int64_t *obu_size, int *type, 
     if (len < 0)
         return len;
 
-    return 0;
+    return len;
 }
 
 static int annexb_probe(const AVProbeData *p)
